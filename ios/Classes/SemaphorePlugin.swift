@@ -2,13 +2,13 @@ import Flutter
 import UIKit
 import moproFFI
 
-public class MoproFlutterPackagePlugin: NSObject, FlutterPlugin {
+public class SemaphorePlugin: NSObject, FlutterPlugin {
   private var identity: Identity? = nil
   private var group: Group? = nil
   public static func register(with registrar: FlutterPluginRegistrar) {
     let channel = FlutterMethodChannel(
-      name: "mopro_flutter_package", binaryMessenger: registrar.messenger())
-    let instance = MoproFlutterPackagePlugin()
+      name: "semaphore", binaryMessenger: registrar.messenger())
+    let instance = SemaphorePlugin()
     registrar.addMethodCallDelegate(instance, channel: channel)
   }
 

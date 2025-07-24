@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
-import 'package:mopro_flutter_package/mopro_flutter_package.dart';
+import 'package:semaphore/semaphore.dart';
 
 void main() {
   runApp(const MyApp());

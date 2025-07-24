@@ -11,13 +11,13 @@ import 'dart:convert';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:integration_test/integration_test.dart';
 
-import 'package:mopro_flutter_package/mopro_flutter_package.dart';
+import 'package:semaphore/semaphore.dart';
 
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('identity creation test', (WidgetTester tester) async {
-    final MoproFlutterPackage plugin = MoproFlutterPackage();
+    final Semaphore plugin = Semaphore();
     
     // Test identity creation
     final secretBytes = Uint8List.fromList(utf8.encode("test_secret"));
@@ -25,7 +25,7 @@ void main() {
     try {
       final identity = await plugin.createIdentity(secretBytes);
       expect(identity, isNotNull);
-      expect(identity.secret, equals(secretBytes));
+      expect(identity.secretScalar(), equals(secretBytes));
     } catch (e) {
       // If the native implementation is not available, this will throw
       // which is expected in a test environment

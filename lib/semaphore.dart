@@ -1,12 +1,12 @@
 import 'dart:typed_data';
 import 'package:flutter/services.dart';
 
-import 'mopro_flutter_types.dart';
+import 'semaphore_types.dart';
 
-export 'mopro_flutter_types.dart';
+export 'semaphore_types.dart';
 
-class MoproFlutterPackage {
-  static const MethodChannel _channel = MethodChannel('mopro_flutter_package');
+class Semaphore {
+  static const MethodChannel _channel = MethodChannel('semaphore');
 
   Future<Identity> createIdentity(Uint8List privateKey) async {
     await _channel.invokeMethod('identity.init', {'privateKey': privateKey});
@@ -89,7 +89,6 @@ class MoproFlutterPackage {
   }
 
   Future<List<Uint8List>> getGroupMembers() async {
-    print("getGroupMembers");
     final result = await _channel.invokeMethod('group.members');
     if (result == null) {
       throw PlatformException(

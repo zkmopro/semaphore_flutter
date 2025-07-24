@@ -3,19 +3,19 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'dart:typed_data';
 
-import 'mopro_flutter_types.dart';
+import 'semaphore_types.dart';
 
-abstract class MoproFlutterPlatformInterface extends PlatformInterface {
-  MoproFlutterPlatformInterface() : super(token: _token);
+abstract class SemaphorePlatformInterface extends PlatformInterface {
+  SemaphorePlatformInterface() : super(token: _token);
 
   static final Object _token = Object();
 
-  static MoproFlutterPlatformInterface _instance =
-      MoproFlutterPlatformInterfaceDefault();
+  static SemaphorePlatformInterface _instance =
+      SemaphorePlatformInterfaceDefault();
 
-  static MoproFlutterPlatformInterface get instance => _instance;
+  static SemaphorePlatformInterface get instance => _instance;
 
-  static set instance(MoproFlutterPlatformInterface instance) {
+  static set instance(SemaphorePlatformInterface instance) {
     PlatformInterface.verifyToken(instance, _token);
     _instance = instance;
   }
@@ -106,8 +106,8 @@ abstract class MoproFlutterPlatformInterface extends PlatformInterface {
 }
 
 // Concrete implementation for the default instance
-class MoproFlutterPlatformInterfaceDefault
-    extends MoproFlutterPlatformInterface {
+class SemaphorePlatformInterfaceDefault
+    extends SemaphorePlatformInterface {
   // @override
   // Future<GenerateProofResult> generateProof(String zkeyPath, String inputs) {
   //   throw UnimplementedError('generateProof() has not been implemented.');

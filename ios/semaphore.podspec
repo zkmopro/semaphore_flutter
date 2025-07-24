@@ -1,13 +1,13 @@
 #
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html.
-# Run `pod lib lint mopro_flutter_package.podspec` to validate before publishing.
+# Run `pod lib lint semaphore.podspec` to validate before publishing.
 #
 Pod::Spec.new do |s|
-  s.name             = 'mopro_flutter_package'
+  s.name             = 'semaphore'
   s.version          = '0.0.1'
-  s.summary          = 'Flutter plugin for mobile proving with Mopro.'
+  s.summary          = 'Flutter plugin for mobile proving with Semaphore.'
   s.description      = <<-DESC
-A Flutter plugin for Mopro, enabling mobile proving with modern zero-knowledge proof systems.
+A Flutter plugin for Semaphore, enabling mobile proving with modern zero-knowledge proof systems.
                        DESC
   s.homepage         = 'https://zkmopro.org/'
   s.license          = { :file => '../LICENSE' }
@@ -30,5 +30,5 @@ A Flutter plugin for Mopro, enabling mobile proving with modern zero-knowledge p
   # required reason APIs, update the PrivacyInfo.xcprivacy file to describe your
   # plugin's privacy impact, and then uncomment this line. For more information,
   # see https://developer.apple.com/documentation/bundleresources/privacy_manifest_files
-  # s.resource_bundles = {'mopro_flutter_package_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
+  # s.resource_bundles = {'semaphore_privacy' => ['Resources/PrivacyInfo.xcprivacy']}
 end

@@ -1,4 +1,4 @@
-group = "com.example.mopro_flutter_package"
+group = "com.example.semaphore"
 version = "1.0-SNAPSHOT"
 
 buildscript {
@@ -25,7 +25,7 @@ apply plugin: "com.android.library"
 apply plugin: "kotlin-android"
 
 android {
-    namespace = "com.example.mopro_flutter_package"
+    namespace = "com.example.semaphore"
 
     compileSdk = 35
 
