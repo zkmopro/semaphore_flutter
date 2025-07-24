@@ -27,7 +27,7 @@ class _MyAppState extends State<MyApp> {
   // Controllers for user input
   final TextEditingController _messageController = TextEditingController(text: 'Hello World');
   final TextEditingController _scopeController = TextEditingController(text: 'test-scope');
-  final TextEditingController _privateKey1Controller = TextEditingController(text: 'secret1');
+  final TextEditingController _privateKey1Controller = TextEditingController(text: 'secret');
   final TextEditingController _privateKey2Controller = TextEditingController(text: 'secret2');
   
   // Store instances for reuse
