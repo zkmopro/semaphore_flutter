@@ -1,6 +1,5 @@
 import Flutter
 import UIKit
-import moproFFI
 
 public class SemaphorePlugin: NSObject, FlutterPlugin {
   private var identity: Identity? = nil
