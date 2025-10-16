@@ -34,15 +34,15 @@ Follow these steps to integrate the Semaphore Flutter package into your project.
 ### `Identity`
 
 ```dart
-import 'package:semaphore/semaphore.dart';
+import 'package:semaphore/src/rust/third_party/semaphore_bindings/identity.dart';
 
 final privateKey = utf8.encode("secret");
 
-final identity = Identity(privateKey);
-final commitment = await identity.commitment();
-final privateKey = await identity.privateKey();
-final secretScalar = await identity.secretScalar();
-final toElement = await identity.toElement();
+final identity = await Identity.newInstance(privateKey: privateKey);
+final commitment = await identity!.commitment();
+final privateKey = await identity!.privateKey();
+final secretScalar = await identity!.secretScalar();
+final toElement = await identity!.toElement();
 ```
 
 ### `Group`
@@ -50,11 +50,11 @@ final toElement = await identity.toElement();
 ```dart
 import 'package:semaphore/semaphore.dart';
 
-final member1 = await identity1.toElement();
-final member2 = await identity2.toElement();
-final group = Group([member1, member2]);
-// get root
-await group.root();
+final element1 = await identity1.toElement();
+final element2 = await identity2.toElement();
+final group = await Group.newInstance(members: [element1, element2]);
+
+final root = await group!.root();
 ```
 
 ### `Proof`
@@ -62,19 +62,21 @@ await group.root();
 ```dart
 import 'package:semaphore/semaphore.dart';
 
+final arcIdentity = await ideneity!.toArc();
+final arcGroup = await group!.toArc();
 final message = "message";
 final scope = "scope";
 final treeDepth = 16;
 
 final proof = await generateSemaphoreProof(
-    identity,
-    group,
-    message,
-    scope,
-    treeDepth,
+    identity: arcIdentity,
+    group: arcGroup,
+    message: message,
+    scope: scope,
+    merkleTreeDepth: treeDepth,
 );
 
-final valid = await verifySemaphoreProof(proof);
+final valid = await verifySemaphoreProof(proof: proof);
 ```
 
 ### Flutter Example App
@@ -98,29 +100,39 @@ final valid = await verifySemaphoreProof(proof);
 
 ## How to Build the Package
 
-### iOS
+### Build bindings from Mopro CLI
 
--   Follow the instructions in the [`mopro-swift-package` README](https://github.com/zkmopro/mopro-swift-package?tab=readme-ov-file#how-to-build-the-package) to build the package.
+### Setup
 
--   Copy the bindings to the path `ios/MoproiOSBindings`.
+-   Install the latest mopro CLI on GitHub
 
--   Then define the native module API in [`ios/Classes/SemaphorePlugin.swift`](ios/Classes/SemaphorePlugin.swift) to match the Flutter type. Please refer to [Flutter - Data types support](https://docs.flutter.dev/platform-integration/platform-channels#codec)
+```sh
+git clone https://github.com/zkmopro/mopro
+cd mopro/cli
+cargo install --path .
+```
 
-### Android
+<!-- TODO: publish this version of mopro-cli -->
 
--   Follow the instructions in the [`mopro-kotlin-package` README](https://github.com/zkmopro/mopro-kotlin-package?tab=readme-ov-file#how-to-build-the-package) to build the package.
+-   Follow the [Getting Started](https://zkmopro.org/docs/getting-started/) guide to run
+    ```sh
+    mopro init
+    ```
+    (select your preferred adapter) and then
+    ```sh
+    mopro build
+    ```
+    to generate the `mopro_flutter_bindings`.
 
--   Copy the `jniLibs` folder to [`android/src/main/jniLibs`](android/src/main/jniLibs)
-    and copy the `uniffi` folder to [`android/src/main/kotlin/uniffi`](android/src/main/kotlin/uniffi)
+### Copy bindings
 
--   Then define the native module API in [`android/src/main/kotlin/com/example/semaphore/SemaphorePlugin.kt`](android/src/main/kotlin/com/example/semaphore/SemaphorePlugin.kt) to match the Flutter type. Please refer to [Flutter - Data types support](https://docs.flutter.dev/platform-integration/platform-channels#codec)
+After running `mopro build`, copy all folders in the generated `mopro_flutter_bindings` (e.g. `android`, `cargokit`,...) to this folder and keep `example` folder. If you add new functions with `flutter_rust_bridge` and want to use them in Flutter, run `mopro build` again to regenerate and update the bindings.
 
-### Flutter Library
+### Update bindings name
 
--   Define Flutter's platform channel APIs to pass messages between Flutter and your desired platforms.
-    -   [`lib/semaphore_platform_interface.dart`](lib/semaphore_platform_interface.dart)
-    -   [`lib/semaphore.dart`](lib/semaphore.dart)
-    -   [`lib/semaphore_types.dart`](lib/semaphore_types.dart)
+<!-- TODO: automatically update the bindings' name https://github.com/zkmopro/mopro/issues/609 -->
+
+-   Rename all the `mopro_flutter_bindings` to `semaphore`.
 
 ## Community
 

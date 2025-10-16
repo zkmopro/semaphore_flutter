@@ -4,9 +4,13 @@ import 'dart:async';
 import 'dart:typed_data';
 
 import 'package:flutter/services.dart';
-import 'package:semaphore/semaphore.dart';
+import 'package:semaphore/src/rust/frb_generated.dart';
+import 'package:semaphore/src/rust/third_party/semaphore_bindings/identity.dart';
+import 'package:semaphore/src/rust/third_party/semaphore_bindings/group.dart';
+import 'package:semaphore/src/rust/third_party/semaphore_bindings/proof.dart';
 
-void main() {
+Future<void> main() async {
+  await RustLib.init();
   runApp(const MyApp());
 }
 
@@ -55,8 +59,8 @@ class _MyAppState extends State<MyApp> {
       final privateKey1 = utf8.encode(_privateKey1Controller.text);
       final privateKey2 = utf8.encode(_privateKey2Controller.text);
 
-      _identity1 = Identity(privateKey1);
-      _identity2 = Identity(privateKey2);
+      _identity1 = await Identity.newInstance(privateKey: privateKey1);
+      _identity2 = await Identity.newInstance(privateKey: privateKey2);
 
       setState(() {
         _status = 'Getting identity elements...';
@@ -71,14 +75,14 @@ class _MyAppState extends State<MyApp> {
       });
 
       // Create group
-      _group = Group([element1, element2]);
+      _group = await Group.newInstance(members: [element1, element2]);
       final groupRoot = await _group!.root();
       final groupMembers = await _group!.members();
 
       setState(() {
         _isLoading = false;
         _status = '✅ Identities and group created successfully!\n'
-            'Group Root: ${groupRoot.take(16).map((b) => b.toRadixString(16).padLeft(2, '0')).join('')}...\n'
+            'Group Root: ${groupRoot?.take(16).map((b) => b.toRadixString(16).padLeft(2, '0')).join('')}...\n'
             'Group Members: ${groupMembers.length}';
       });
     } catch (e) {
@@ -104,11 +108,11 @@ class _MyAppState extends State<MyApp> {
       });
 
       final proof = await generateSemaphoreProof(
-        _identity1!,
-        _group!,
-        _messageController.text,
-        _scopeController.text,
-        16, // treeDepth
+        identity: await _identity1!.toArc(),
+        group: await _group!.toArc(),
+        message: _messageController.text,
+        scope: _scopeController.text,
+        merkleTreeDepth: 16,
       );
 
       setState(() {
@@ -141,7 +145,7 @@ class _MyAppState extends State<MyApp> {
         _status = 'Verifying proof...';
       });
 
-      final isValid = await verifySemaphoreProof(_generatedProof);
+      final isValid = await verifySemaphoreProof(proof: _generatedProof);
 
       setState(() {
         _isLoading = false;

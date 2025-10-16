@@ -2,16 +2,12 @@ PODS:
   - Flutter (1.0.0)
   - integration_test (0.0.1):
     - Flutter
-  - path_provider_foundation (0.0.1):
-    - Flutter
-    - FlutterMacOS
   - semaphore (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
   - integration_test (from `.symlinks/plugins/integration_test/ios`)
-  - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - semaphore (from `.symlinks/plugins/semaphore/ios`)
 
 EXTERNAL SOURCES:
@@ -19,16 +15,13 @@ EXTERNAL SOURCES:
     :path: Flutter
   integration_test:
     :path: ".symlinks/plugins/integration_test/ios"
-  path_provider_foundation:
-    :path: ".symlinks/plugins/path_provider_foundation/darwin"
   semaphore:
     :path: ".symlinks/plugins/semaphore/ios"
 
 SPEC CHECKSUMS:
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   integration_test: 4a889634ef21a45d28d50d622cf412dc6d9f586e
-  path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
-  semaphore: fa05e15f0fb90f260d79e817347e1a49bc7c952d
+  semaphore: a81e1130a1a59065dce591949853a6426a9c7498
 
 PODFILE CHECKSUM: 53a6aebc29ccee84c41f92f409fc20cd4ca011f1
 
